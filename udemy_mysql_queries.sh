@@ -1,4 +1,6 @@
 
+# https://www.w3schools.com/sql/
+
 # Create user
 CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'Virgin!234';
 GRANT ALL PRIVILEGES ON * . * TO newuser@localhost;
@@ -54,3 +56,22 @@ delete from StudentsDetail where firstname='Student1';
 # Create a copy of  table
 CREATE TABLE StudentsBackup like StudentsDetail;
 INSERT INTO StudentsBackup SELECT * FROM StudentsDetail;
+
+# Delete all records of a table
+truncate table StudentsBackup;
+
+# Describe table structure
+describe StudentsDetail;
+
+# Alter table column email to accept only unique values
+alter table StudentsDetail modify column email varchar(100) unique;
+alter table StudentsDetail modify column email varchar(100) unique not null;
+
+# Drop column
+ALTER TABLE StudentsBackup DROP year;
+
+# Add new column and update it with values
+ALTER TABLE StudentsBackup ADD year int(1);
+update StudentsBackup set year='2' where firstname='Student1';
+
+
