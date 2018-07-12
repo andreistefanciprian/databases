@@ -2,7 +2,7 @@
 df -h
 
 #  list total size of all directories within the current one, and sort them by size
-cd /data/mysql
+cd /mysql_folder/
 du -ch -d 1 | sort -hr
 
 # identify biggest mysql tables
@@ -17,16 +17,17 @@ ORDER  BY data_length + index_length DESC
 LIMIT  10;
 
 # identify id by date
-select id FROM radius_production.wlc_sessions where id>858310431 AND created_at<'2018-06-28' order by id desc LIMIT 2;
-+------------+
-| id         |
-+------------+
-| 1548106960 |
-| 1548106957 |
-+------------+
-# table purge
-sudo pt-archiver --user root --ask-pass --source h=localhost,D=radius_production,t=wlc_sessions --where "id<1548106960 AND created_at < '2018-06-28'" --limit 1000 --commit-each --purge
+select id FROM radius_production.wlc_sessions where id>858888831 AND created_at<'2018-06-28' order by id desc LIMIT 2;
+# table purge by id and date
+sudo pt-archiver --user root --ask-pass --source h=localhost,D=radius_production,t=wlc_sessions --where "id<1548888960 AND created_at < '2018-06-28'" --limit 1000 --commit-each --purge
+# table purge by interval
+sudo pt-archiver --user root --ask-pass --source h=localhost,D=radius_production,t=wlc_sessions --where "created_at < NOW() - interval 7 day" --limit 1000 --commit-each --purge
 
 # table resize
 sudo pt-online-schema-change --user root --ask-pass --alter "ENGINE=InnoDB" D=radius_production,t=wlc_sessions --execute --preserve-triggers
+
+##
+sudo pt-archiver --user root --ask-pass --source h=localhost,D=radius_production,t=sessions --where "updated_at < NOW() - interval 7 day" --limit 1000 --commit-each --purge
+
+sudo pt-archiver --user root --ask-pass --source h=localhost,D=radius_production,t=sessions --where "id<8779595821 AND updated_at < '2018-06-28''" --limit 1000 --commit-each --purge
 

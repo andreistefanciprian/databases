@@ -50,3 +50,7 @@ update StudentsDetail set email='student1@gmail.com', mobile='123456789' where f
 
 # Delete values
 delete from StudentsDetail where firstname='Student1';
+
+# Create a copy of  table
+CREATE TABLE StudentsBackup like StudentsDetail;
+INSERT INTO StudentsBackup SELECT * FROM StudentsDetail;
