@@ -26,6 +26,9 @@ VALUES ('Stefan', 'Ciprian', '0749832222', 'andreic@gmail.com', NOW());
 INSERT INTO StudentsDetail (firstname, lastname, mobile, email, enrolled_date)
 VALUES ('Student1', 'LastName', '0749833333', 'email@gmail.com', NOW());
 
+INSERT INTO StudentsDetail (firstname, lastname, mobile, email, enrolled_date)
+VALUES ('Student11','Student12'), ('LastName11','LastName12'), ('0749833333','123456789'), ('email11@gmail.com','email12@gmail.com'), (NOW(),NOW());
+
 # Select columns
 select * from StudentsDetail;
 select lastname,firstname from StudentsDetail;
@@ -73,5 +76,8 @@ ALTER TABLE StudentsBackup DROP year;
 # Add new column and update it with values
 ALTER TABLE StudentsBackup ADD year int(1);
 update StudentsBackup set year='2' where firstname='Student1';
+
+# Between
+select * from StudentsDetail where id between 2 and 6;
 
 
