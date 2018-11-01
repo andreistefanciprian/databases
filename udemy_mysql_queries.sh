@@ -80,4 +80,12 @@ update StudentsBackup set year='2' where firstname='Student1';
 # Between
 select * from StudentsDetail where id between 2 and 6;
 
-
+## MySQL Dump and Import
+mysqldump -h 172.19.128.133 -u username -ppassword \
+--single-transaction \
+--verbose \
+--quick \
+--compress \
+--triggers \
+db_name db_table \
+>`date -I`_db_name_db_table_dump.sql
