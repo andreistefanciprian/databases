@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Purge old Percona MySQL records from Monday to Thursday from 10 to 12 AM and from 00 to 04 AM
+# Crontab job (sudo crontab -e) to purge old Percona MySQL records from Monday to Thursday from 10 to 12 AM and from 00 to 04 AM
 # 01 00 * * 1-4 /root/purge_sessions.sh 225m
 # 01 10 * * 1-4 /root/purge_sessions.sh 105m
 
