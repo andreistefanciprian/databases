@@ -32,7 +32,7 @@ WHERE table_name = 'sessions' AND table_schema = 'radius_production';"
 echo | tee -a purge_radius_sessions.log
 sudo timeout ${duration} pt-archiver --user root --source h=localhost,D=radius_production,t=sessions --where "id<3583423191" --limit 10 --txn-size 10 --primary-key-only --bulk-delete --purge --statistics --sleep 2 | tee -a purge_radius_sessions.log
 
-# Display DB sizes
+# Display DB stats
 echo | tee -a purge_radius_sessions.log
 mysql -u root -h localhost -te "
 tee purge_radius_sessions.log;
