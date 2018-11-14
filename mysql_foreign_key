@@ -1,0 +1,48 @@
+## https://www.hostingadvice.com/how-to/mysql-foreign-key-example/
+
+# Create tables with foreign key
+CREATE DATABASE IF NOT EXISTS dbdemo;
+USE dbdemo;
+ 
+CREATE TABLE customer (
+  id INT NOT NULL AUTO_INCREMENT,
+  firstname varchar(50) NOT NULL,
+  lastname varchar(50) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=INNODB;
+ 
+CREATE TABLE contact (
+  id INT,
+  customer_id INT,
+  info varchar(50) NOT NULL,
+  type varchar(50) NOT NULL,
+  INDEX par_ind (customer_id),
+  CONSTRAINT fk_customer 
+  FOREIGN KEY (customer_id)
+  REFERENCES customer(id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+) ENGINE=INNODB;
+
+# Populate tables with data
+INSERT INTO customer (firstname, lastname) VALUES ('Elaine', 'Stevens'), ('Mary', 'Dittman'), ('Skip', 'Stevenson');
+
+INSERT INTO contact (customer_id, info, type) VALUES
+('1', '111–111–111', 'work' ),
+('1', '111–111–123', 'home'),
+('1', 'elaine@example.com', 'email'),
+('4', '222–222–222', 'work'),
+('4', 'mary@example.com', 'email'),
+('4', 'mary2@example.com', 'email'),
+('7', 'skip@example.com', 'email');
+
+# Test how foreign key works
+# After each table op, check the content of contact table (select * from contact;)
+DELETE FROM customer WHERE firstname = 'Skip'; 
+UPDATE customer SET id=11 WHERE firstname='Elaine';
+
+# Drop foreign key
+ALTER TABLE contact DROP FOREIGN KEY fk_customer;   
+
+# Recreate foreign key
+ALTER TABLE contact ADD CONSTRAINT fk_customer FOREIGN KEY (customer_id) REFERENCES customer (id) ON DELETE CASCADE ON UPDATE RESTRICT;
